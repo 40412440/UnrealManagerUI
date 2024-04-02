@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 #pragma once
 
@@ -6,50 +6,67 @@
 #include "Blueprint/UserWidget.h"
 #include "WidgetReactionInterface.h"
 #include "MainMenuWidget.generated.h"
-
-/** Custom main menu, adds loading level async to create a more smooth experience when loading the game level through the function AsyncLevelLoad
- * 
+/**
+ * Custom main menu widget that adds loading level asynchronously to create a smoother experience when loading the game level.
  */
+class UButtonWidget;
+
 UCLASS(Abstract, BlueprintType)
 class MANAGERUI_API UMainMenuWidget : public UUserWidget, public IWidgetReactionInterface
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
+
 public:
-	UFUNCTION(BlueprintCallable, Category = "Load")
-	void AsyncLevelLoad(const FString& levelDir, const FString& levelName);
+    /**
+     * Asynchronously loads the specified level.
+     * @param LevelDir The directory of the level to load.
+     * @param LevelName The name of the level to load.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Load")
+    void AsyncLevelLoad(const FString& LevelDir, const FString& LevelName);
 
 protected:
-	UFUNCTION()
-	void OnPreheatFinished() const;
+    /** Called when preheating finished. */
+    UFUNCTION()
+    void OnPreheatFinished() const;
 
-	virtual void NativeOnInitialized() override;
-	void AsyncLevelLoadFinished(const FString& LevelName);
+    virtual void NativeOnInitialized() override;
 
-	// Functions bound to button clicks
-	UFUNCTION()
-	void StartGame();
-	UFUNCTION()
-	void QuitGame();
+    /**
+     * Callback function called when asynchronous level loading finished.
+     * @param LevelName The name of the loaded level.
+     */
+    void AsyncLevelLoadFinished(const FString& LevelName);
+
+    /** Starts the game. */
+    UFUNCTION()
+    void StartGame();
+
+    /** Quits the game. */
+    UFUNCTION()
+    void QuitGame();
 
 protected:
-	// Buttons
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite, Category = "Widget")
-	TObjectPtr<class UButtonWidget> StartButton;
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite, Category = "Widget")
-	TObjectPtr<class UButtonWidget> QuitButton;
+    /** The start button widget. */
+    UPROPERTY(meta = (BindWidget), BlueprintReadWrite, Category = "Widget")
+    TObjectPtr<UButtonWidget> StartButton;
 
+    /** The quit button widget. */
+    UPROPERTY(meta = (BindWidget), BlueprintReadWrite, Category = "Widget")
+    TObjectPtr<UButtonWidget> QuitButton;
 
-	// Name of level that you wish to load when pressing the start Button
-	UPROPERTY(EditAnywhere, Category = "Start Level")
-	FString StartLevelName;
-	// Directory of level that you wish to load when pressing the start Button
-	UPROPERTY(EditAnywhere, Category = "Start Level")
-	FString LevelDirectory;
+    /** The name of the level to load when pressing the start button. */
+    UPROPERTY(EditAnywhere, Category = "Start Level")
+    FString StartLevelName;
 
-	UPROPERTY(EditAnywhere, Category = "Start Level")
-	float MinimumLevelLoadTime;
+    /** The directory of the level to load when pressing the start button. */
+    UPROPERTY(EditAnywhere, Category = "Start Level")
+    FString LevelDirectory;
 
-	FString LevelName;
+    /** The minimum time in seconds to wait for level loading. */
+    UPROPERTY(EditAnywhere, Category = "Start Level")
+    float MinimumLevelLoadTime;
 
-	
+    /** The name of the loaded level. */
+    FString LevelName;
 };

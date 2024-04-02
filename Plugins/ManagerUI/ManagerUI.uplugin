@@ -2,13 +2,13 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "ManagerUI",
+	"FriendlyName": "LayerManagerUI",
 	"Description": "UI layer manager and core UI functionality (main menu, hud, pause etc)",
 	"Category": "Other",
 	"CreatedBy": "An@stacioDev",
-	"CreatedByURL": "",
+	"CreatedByURL": "https://miguel-anastacio.github.io",
 	"DocsURL": "",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/db616fa664fc4f1080425981dbb38c03",
 	"SupportURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
@@ -20,7 +20,7 @@
 			"Type": "Runtime",
 			"LoadingPhase": "PostEngineInit",
 			"PlatformAllowList": [
-				"“Win64”"
+				"Win64"
 			]
 		}
 	],

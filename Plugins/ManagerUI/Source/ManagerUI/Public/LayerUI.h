@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 #pragma once
 
@@ -31,64 +31,103 @@ class MANAGERUI_API ULayerUI : public UObject
 	GENERATED_BODY()
 
 public:
-	//ULayerUI();
-	// You should not call these functions outside of a layer object or the layer manager
+	/**
+	 * Pushes the specified widget onto the stack of this layer.
+	 * @param Widget The widget to push onto the stack.
+	 */
 	void PushToStack(UUserWidget* widget);
+
+	/**
+	* Pops and returns the widget from the top of the stack of this layer.
+	* @return The widget popped from the top of the stack, or nullptr if the stack is empty.
+	*/
 	UUserWidget* PopFromStack();
 
+	/**
+	 * Retrieves the widget from the top of the stack of this layer without removing it.
+	 * @return The widget at the top of the stack, or nullptr if the stack is empty.
+	 */
 	UUserWidget* PeakStack() const; 
+
+	/**
+	 * Checks if the stack of this layer is empty.
+	 * @return True if the stack is empty, false otherwise.
+	 */
 	bool IsLayerEmpty() const;
-	//////////////////////////////////////
 
-
+	/**
+	 * Sets the visibility of the layer.
+	 * @param Visibility The visibility to set.
+	 */
 	UFUNCTION(BlueprintCallable, Category = Layer)
 	void SetVisibilityOfLayer(ESlateVisibility visibility);
 
+	/**
+	 * Gets the visibility of the layer.
+	 * @return The visibility of the layer.
+	 */
 	UFUNCTION(BlueprintCallable, Category = Layer)
 	ESlateVisibility GetVisibilityOfLayer() const;
 
+	/** Clears the stack of widgets in this layer. */
 	UFUNCTION(BlueprintCallable, Category = Layer)
 	void ClearStack();
 
-	// this defines the impact that pushing to this layer has on the other layers
+	/**
+	 * Defines the impact that pushing a widget to this layer has on other layers.
+	 * @param OtherLayers Array of other layers affected by the push operation.
+	 */
 	UFUNCTION(BlueprintNativeEvent, Category = "Layer Reaction")
 	void OnWidgetPushedOthers(const TArray<ULayerUI*>& otherLayers);
 	virtual void OnWidgetPushedOthers_Implementation(const TArray<ULayerUI*>& otherLayers);
 
-	// this defines the impact that pushing to this layer has on the other layers
+	/**
+	 * Defines the impact that popping a widget from this layer has on other layers.
+	 * @param OtherLayers Array of other layers affected by the pop operation.
+	 */
 	UFUNCTION(BlueprintNativeEvent, Category = Layer)
 	void OnWidgetPoppedOthers(const TArray<ULayerUI*>& otherLayers);
 	virtual void OnWidgetPoppedOthers_Implementation(const TArray<ULayerUI*>& otherLayers);
 
-	// this defines the impact that clearing this layer has on its widgets 
+	/**
+	 * Defines the impact that clearing this layer has on its widgets.
+	 * By default, it changes the widgets visibility to the hidden state.
+	 */
 	UFUNCTION(BlueprintNativeEvent, Category = Layer)
 	void OnLayerCleared();
-	// by default it just changes the widgets visibility to hidden state
 	virtual void OnLayerCleared_Implementation();
 
 
 public:
+	/** The type of the layer. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = Layer);
 	LayerType Type = LayerType::SINGLE;
 
-	// The visibility to set the widget when it is pushed to the layer
+	/** The visibility state to set the widget when it is pushed to the layer. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,  meta = (ExposeOnSpawn = true), Category = Layer);
 	ESlateVisibility VisibleState = ESlateVisibility::SelfHitTestInvisible;
 
-	// The visibility to set the widget when it is popped from the layer
+	/** The visibility state to set the widget when it is popped from the layer. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = Layer);
 	ESlateVisibility HiddenState = ESlateVisibility::Collapsed;
 
 protected:
+	/** Array of widgets stacked in this layer. */
 	UPROPERTY(VisibleAnywhere, Category = Layer)
 	TArray<class UUserWidget*> WidgetStack;
 
-	// called when pushing a widget by default uses the layerType to hide/not hide the other widgets
+	/**
+	* Called when pushing a widget to this layer.
+	* By default, uses the layerType to determine visibility of other widgets.
+	*/
 	UFUNCTION(BlueprintNativeEvent, Category = Layer)
 	void OnWidgetPushed(class UUserWidget* widget);
 	virtual void OnWidgetPushed_Implementation(class UUserWidget* widget);
 
-	// called when popping a widget by default - nothing
+	/**
+	* Called when popping a widget from this layer.
+	* By default, it sets the widget visibility to HiddenState.
+	*/
 	UFUNCTION(BlueprintNativeEvent, Category = Layer)
 	void OnWidgetPopped(class UUserWidget* widget);
 	virtual void OnWidgetPopped_Implementation(class UUserWidget* widget);

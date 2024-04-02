@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright 2024 An@stacioDev All rights reserved.
 
 #include "Widgets/ButtonWidget.h"
 #include "Components/RichTextBlock.h"
@@ -11,4 +10,18 @@ void UButtonWidget::NativePreConstruct()
 	{
 		ButtonText->SetText(Text);
 	}
+}
+
+void UButtonWidget::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+	if (Button)
+	{
+		Button->OnClicked.AddDynamic(this, &UButtonWidget::OnButtonClicked);
+	}
+}
+
+void UButtonWidget::OnButtonClicked()
+{
+	OnClickedDelegate.Broadcast(this);
 }

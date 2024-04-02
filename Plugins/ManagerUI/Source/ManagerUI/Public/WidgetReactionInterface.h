@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright 2024 An@stacioDev All rights reserved.
 #pragma once
 
 #include "CoreMinimal.h"
@@ -21,12 +20,18 @@ class MANAGERUI_API IWidgetReactionInterface
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	// the reaction to the widget on being pushed, for example play animation or play a sound
+	/**
+	 * Defines the reaction when the widget is pushed.
+	 * This function can be overridden to implement specific behavior.
+	 */
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Widget Reaction")
 	void OnWidgetPushed();
 	virtual void OnWidgetPushed_Implementation() {};
+	/**
+	* Defines the reaction when the widget is popped.
+	* This function can be overridden to implement specific behavior.
+	*/
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Widget Reaction")
 	void OnWidgetPopped();
 	virtual void OnWidgetPopped_Implementation() {};

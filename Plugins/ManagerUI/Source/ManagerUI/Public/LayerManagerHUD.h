@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 #pragma once
 
@@ -18,53 +18,98 @@ class MANAGERUI_API ALayerManagerHUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void RegisterDefaultLayer(const FString& name);
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void RegisterLayer(const FString& name, class ULayerUI* layer, bool current = false);
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void RemoveLayer(const FString& name);
+public:
+    /** Registers a default layer with the specified name. */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void RegisterDefaultLayer(const FString& Name);
 
-	//	Adds widget to layer, if layer does not exist a new one is created
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void PushToLayer(const FString& name, class UUserWidget* widget);
-	// Removes widget from top of layer
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	UUserWidget* PopFromLayer(const FString& name);
-	// Removes widget from top of layer
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	UUserWidget* PopFromCurrentLayer();
+    /**
+     * Registers a layer with the specified name and associated ULayerUI.
+     * @param Name The name of the layer.
+     * @param Layer The ULayerUI associated with the layer.
+     * @param bCurrent Indicates whether this layer should be set as the current layer.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void RegisterLayer(const FString& Name, ULayerUI* Layer, bool bCurrent = false);
 
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void ClearAllLayers();
-	UFUNCTION(BlueprintCallable, Category = Layer)
-	void ClearLayer(const FString& name);
+    /** Removes the layer with the specified name. */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void RemoveLayer(const FString& Name);
 
+    /**
+     * Adds a widget to the specified layer. If the layer does not exist, a new one is created.
+     * @param Name The name of the layer.
+     * @param Widget The widget to add to the layer.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void PushToLayer(const FString& Name, UUserWidget* Widget);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = Layer)
-	ULayerUI* GetLayer(const FString& name) const;
+    /**
+     * Removes and returns the widget from the top of the specified layer.
+     * @param Name The name of the layer.
+     * @return The widget removed from the top of the layer, or nullptr if the layer is empty.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    UUserWidget* PopFromLayer(const FString& Name);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = Layer)
-	FString GetCurrentLayerTag() const;
+    /**
+     * Removes and returns the widget from the top of the current layer.
+     * @return The widget removed from the top of the current layer, or nullptr if the current layer is empty.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    UUserWidget* PopFromCurrentLayer();
 
-	// Retrieve the widget from the top of a layer without changing the layer
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = Layer)
-	UUserWidget* PeakLayer(const FString& name) const;
+    /** Clears all layers. */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void ClearAllLayers();
 
-	// Evaluates if a widgets is on the top of a specific layer
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = Layer)
-	bool IsWidgetOnTopOfLayer(const FString& name, class UUserWidget* widget) const;
+    /** Clears the layer with the specified name. */
+    UFUNCTION(BlueprintCallable, Category = "Layer")
+    void ClearLayer(const FString& Name);
 
+    /**
+     * Gets the layer with the specified name.
+     * @param Name The name of the layer to retrieve.
+     * @return The ULayerUI associated with the specified name, or nullptr if not found.
+     */
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Layer")
+    ULayerUI* GetLayer(const FString& Name) const;
+
+    /**
+     * Gets the tag of the current layer.
+     * @return The tag of the current layer.
+     */
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Layer")
+    FString GetCurrentLayerTag() const;
+
+    /**
+     * Retrieves the widget from the top of the specified layer without removing it.
+     * @param Name The name of the layer.
+     * @return The widget at the top of the specified layer, or nullptr if the layer is empty.
+     */
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Layer")
+    UUserWidget* PeekLayer(const FString& Name) const;
+
+    /**
+     * Checks if a widget is on top of the specified layer.
+     * @param Name The name of the layer.
+     * @param Widget The widget to check.
+     * @return True if the widget is on top of the specified layer, false otherwise.
+     */
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Layer")
+    bool IsWidgetOnTopOfLayer(const FString& Name, UUserWidget* Widget) const;
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Layer)
-	FString CurrentLayerID;
+    /** The ID of the current layer. */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Layer")
+    FString CurrentLayerID;
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = Layer)
-	TMap<FString, class ULayerUI*> LayersUI;
+    /** Map of layer names to ULayerUI instances. */
+    UPROPERTY(VisibleAnywhere, Category = "Layer")
+    TMap<FString, ULayerUI*> LayersUI;
 
-	// Keeps track of the order of layers visible on the viewport
-	UPROPERTY()
-	TArray<FString> LayerOrder;
+    /** Array that keeps track of the order of layers visible on the viewport. */
+    UPROPERTY()
+    TArray<FString> LayerOrder;
 };

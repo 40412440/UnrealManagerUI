@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 
 #include "UILayerManagerFunctionLibrary.h"
@@ -29,7 +29,7 @@ void UUILayerManagerFunctionLibrary::ToggleWidgetVisibility(UUserWidget* widget,
 	ALayerManagerHUD* hud = Cast<ALayerManagerHUD>(controller->GetHUD());
 	if (hud && widget)
 	{
-		if (widget == hud->PeakLayer(layerName))
+		if (widget == hud->PeekLayer(layerName))
 		{
 			hud->PopFromLayer(layerName);
 		}

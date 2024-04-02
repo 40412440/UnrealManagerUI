@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 Anast@cioDev All rights reserved.
 
 #pragma once
 
@@ -7,8 +7,8 @@
 #include "WidgetReactionInterface.h"
 #include "ButtonWidget.generated.h"
 
-
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUISelectionInputSignature);
+/** Custom delegate to use if you nedd to know which button was clicked */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCustomButtonClickedSignature, class UButtonWidget*, Button);
 /**
  * Custom Button - create custom looks for it by creating BP widgets that inherit from this one
  */
@@ -18,26 +18,30 @@ class MANAGERUI_API UButtonWidget : public UUserWidget, public IWidgetReactionIn
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Button") 
-	class UButton* GetButton() const { return Button; };
+    /** Gets the button associated with this widget. */
+    UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Button")
+    class UButton* GetButton() const { return Button; };
 
-	virtual void NativePreConstruct() override;
+    virtual void NativePreConstruct() override;
+    virtual void NativeOnInitialized() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
-	FText Text;
+    /** The text displayed on the button. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
+    FText Text;
 
-	//// Delegate to use when we wish to trigger the button through an input action
-	//// Mostly used to trigger 
-	//UPROPERTY(BlueprintCallable, BlueprintAssignable)
-	//FOnUISelectionInputSignature UIInputActionDelegate;
+    /** Delegate called when the button is clicked. */
+    FCustomButtonClickedSignature OnClickedDelegate;
 
 protected:
-	//UFUNCTION()
-	//	void OnInputActionUI();
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<class UButton> Button;
+    /** Called when the button is clicked. */
+    UFUNCTION()
+    void OnButtonClicked();
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<class URichTextBlock> ButtonText;
-	
+    /** The button widget. */
+    UPROPERTY(meta = (BindWidget))
+    TObjectPtr<class UButton> Button;
+
+    /** The text block widget displaying the button text. */
+    UPROPERTY(meta = (BindWidget))
+    TObjectPtr<class URichTextBlock> ButtonText;
 };

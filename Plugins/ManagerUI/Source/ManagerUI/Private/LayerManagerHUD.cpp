@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 
 #include "LayerManagerHUD.h"
@@ -159,7 +159,7 @@ ULayerUI* ALayerManagerHUD::GetLayer(const FString& name) const
 	return (*LayersUI.Find(name));
 }
 
-UUserWidget* ALayerManagerHUD::PeakLayer(const FString& name) const 
+UUserWidget* ALayerManagerHUD::PeekLayer(const FString& name) const 
 {
 	const auto layer = LayersUI.Find(name);
 	if (layer)

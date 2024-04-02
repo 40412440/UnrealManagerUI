@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 An@stacioDev All rights reserved.
 
 #pragma once
 
@@ -23,31 +23,48 @@ class MANAGERUI_API UUIActionsComp : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UUIActionsComp();
-	// To bind the actions in c++ call this fucntion in - YourPlayerController::SetupInputComponent
+	/**
+	 * Binds actions in C++ by calling this function in YourPlayerController::SetupInputComponent.
+	 * @param EnhancedInputComponent The EnhancedInputComponent to bind actions to.
+	 */
 	void BindActions(class UEnhancedInputComponent* enhancedInputComponent);
-
+	/**
+	 * Adds a UI mapping context to the specified subsystem.
+	 * @param Subsystem The subsystem to add the mapping context to.
+	 */
 	UFUNCTION(BlueprintCallable, Category="Action Mapping")
 	void AddUIMappingContext(class UEnhancedInputLocalPlayerSubsystem* subsystem);
+	/**
+	 * Removes a UI mapping context from the specified subsystem.
+	 * @param Subsystem The subsystem to remove the mapping context from.
+	 */
 	UFUNCTION(BlueprintCallable, Category = "Action Mapping")
 	void RemoveUIMappingContext(class UEnhancedInputLocalPlayerSubsystem* subsystem);
 
+	/** Toggles the inventory. - Example function action */
 	UFUNCTION(BlueprintCallable, Category = Action)
 	void ToggleInventory();
+	/** Pauses the game. - Example function action */
 	UFUNCTION(BlueprintCallable, Category = Action)
 	void Pause();
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	/** The priority of the mapping context. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	int32 MappingContextPriority;
-	/** UI MappingContext */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputMappingContext* UIMappingContext;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* PauseAction;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* InventoryAction;
 
+	/** The UI mapping context. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	UInputMappingContext* UIMappingContext;
+
+	/** The action for pausing the game. - Example action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* PauseAction;
+
+	/** The action for toggling the inventory. - Example action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InventoryAction;
 		
 };

@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright 2024 An@stacioDev All rights reserved.
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,7 +6,7 @@
 #include "GameHUDWidget.generated.h"
 
 /**
- * 
+ * Example HUD
  */
 UCLASS(Abstract, BlueprintType)
 class MANAGERUI_API UGameHUDWidget : public UUserWidget
