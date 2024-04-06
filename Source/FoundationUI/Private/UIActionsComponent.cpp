@@ -2,7 +2,7 @@
 
 
 #include "UIActionsComponent.h"
-#include "../Plugins/ManagerUI/Source/ManagerUI/Public/CoreGameHUD.h"
+//#include "../Plugins/ManagerUI/Source/ManagerUI/Public/CoreGameHUD.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/PlayerController.h"
@@ -33,7 +33,7 @@ void UUIActionsComponent::RemoveUIMappingContext(UEnhancedInputLocalPlayerSubsys
 
 void UUIActionsComponent::ToggleInventory()
 {
-	if (!IsValid(GetOwner()))
+	/*if (!IsValid(GetOwner()))
 	{
 		return;
 	}
@@ -48,12 +48,12 @@ void UUIActionsComponent::ToggleInventory()
 	if (IsValid(hud))
 	{
 		hud->ToggleInventory();
-	}
+	}*/
 }
 
 void UUIActionsComponent::Pause()
 {
-	if (!IsValid(GetOwner()))
+	/*if (!IsValid(GetOwner()))
 	{
 		return;
 	}
@@ -68,7 +68,7 @@ void UUIActionsComponent::Pause()
 	if (IsValid(hud))
 	{
 		hud->TogglePause();
-	}
+	}*/
 }
 
 
